@@ -186,8 +186,60 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
     letter-spacing: var(--tracking-normal);
+    font-family: var(--font-sans);
   }
+}
+
+@layer base {
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+/* logos light/dark em CSS global */
+.logo-dark {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo-light {
+    display: none;
+  }
+
+  .logo-dark {
+    display: unset;
+  }
+}
+
+
+.galactic-hub-background {
+  background: radial-gradient(circle at center, rgba(127, 19, 236, 0.1) 0%, transparent 70%);
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.network-node {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  background-color: #7f13ec;
+  border-radius: 50%;
+  box-shadow: 0 0 8px 4px rgba(127, 19, 236, 0.7);
+  opacity: 0.7;
+  z-index: 1;
+}
+
+.network-line {
+  position: absolute;
+  background: linear-gradient(to right, rgba(127, 19, 236, 0.0), rgba(127, 19, 236, 0.5), rgba(127, 19, 236, 0.0));
+  height: 2px;
+  z-index: 0;
+  transform-origin: 0 0;
 }
