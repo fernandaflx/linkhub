@@ -2,17 +2,17 @@ import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
-  const { sessionToken } = await req.json() // token que você gerar/receber
+  const body = await req.json()
 
-  // TODO: validar o token aqui
+  const { idToken } = body
 
   const cookieStore = await cookies()
-  cookieStore.set('session', sessionToken, {
+  cookieStore.set('session', idToken, {
     httpOnly: true,
     secure: true,
     sameSite: 'lax',
     path: '/',
-    maxAge: 60 * 60 * 24 * 7, // 7 dias
+    maxAge: 60 * 60 * 24 * 7,
   })
 
   return NextResponse.json({ ok: true })

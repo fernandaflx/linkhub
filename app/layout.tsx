@@ -42,6 +42,7 @@ export default function RootLayout({
           ${lora.variable}
           ${plexMono.variable}
           antialiased
+          px-16
         `}
       >
         <ThemeProvider

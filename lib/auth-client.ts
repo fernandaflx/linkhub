@@ -1,4 +1,3 @@
-// lib/auth-client.ts
 'use client'
 
 import {
@@ -40,5 +39,5 @@ export async function signInWithGoogle() {
 
 export async function signOutUser() {
   await signOut(auth)
-  await fetch('/api/session', { method: 'DELETE' }) // apaga cookie
+  await fetch('/api/session', { method: 'DELETE' })
 }
