@@ -51,6 +51,10 @@ export enum Platform {
   STACKOVERFLOW = 'STACKOVERFLOW',
   DEVTO = 'DEVTO',
   FACEBOOK = 'FACEBOOK',
+  TWITCH = 'TWITCH',
+  CODEWARS = 'CODEWARS',
+  FREECODECAMP = 'FREECODECAMP',
+  GITLAB = 'GITLAB',
 }
 
 export type Link = {

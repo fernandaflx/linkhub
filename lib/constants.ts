@@ -76,4 +76,10 @@ export const PLATFORM_CONFIGS: Record<
     color: 'text-orange-500',
     placeholder: 'https://stackoverflow.com/users/id/username',
   },
+  [Platform.WEBSITE]: {
+    label: '',
+    icon: '',
+    color: '',
+    placeholder: '',
+  },
 }
