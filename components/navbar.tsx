@@ -26,7 +26,7 @@ export function NavBar() {
   return (
     <nav className="fixed top-0 inset-x-0 z-50 flex justify-center px-4 py-3 w-screen">
       <div className="glass-panel flex w-full items-center justify-between rounded-full px-4 py-2">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href={isAuthenticated ? '/dashboard' : "/"} className="flex items-center gap-2">
           <Logo />
         </Link>
 
