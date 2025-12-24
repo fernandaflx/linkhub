@@ -15,8 +15,7 @@ export function NavBar() {
   const publicLinks = [{ href: "/login", label: "Entrar" }];
 
   const appLinks = [
-    { href: "/", label: "Dashboard" },
-    { href: "/projects", label: "Projetos" },
+    { href: "/dashboard", label: "Dashboard" },
     { href: "/settings", label: "Configurações" },
   ];
 
