@@ -46,6 +46,11 @@ export enum Platform {
   YOUTUBE = 'youtube',
   LINKEDIN = 'linkedin',
   WEBSITE = 'website',
+  INSTAGRAM = 'INSTAGRAM',
+  TWITTER = 'TWITTER',
+  STACKOVERFLOW = 'STACKOVERFLOW',
+  DEVTO = 'DEVTO',
+  FACEBOOK = 'FACEBOOK',
 }
 
 export type Link = {

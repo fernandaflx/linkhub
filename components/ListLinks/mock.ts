@@ -12,19 +12,19 @@ export const mockLinkGroups: LinkGroup[] = [
       {
         id: 'lnk-github',
         platform: Platform.GITHUB,
-        label: 'GitHub',
+        // label: 'GitHub',
         url: 'https://github.com/seu-usuario',
       },
       {
         id: 'lnk-linkedin',
         platform: Platform.LINKEDIN,
-        label: 'LinkedIn',
+        // label: 'LinkedIn',
         url: 'https://linkedin.com/in/seu-usuario',
       },
       {
         id: 'lnk-website',
         platform: Platform.GITHUB, // ou outra plataforma mais adequada
-        label: 'Website',
+        // label: 'Website',
         url: 'https://seu-site.dev',
       },
     ],
@@ -40,19 +40,19 @@ export const mockLinkGroups: LinkGroup[] = [
       {
         id: 'lnk-instagram',
         platform: Platform.INSTAGRAM,
-        label: 'Instagram',
+        // label: 'Instagram',
         url: 'https://instagram.com/seu-usuario',
       },
       {
         id: 'lnk-twitter',
         platform: Platform.TWITTER,
-        label: 'Twitter / X',
+        // label: 'Twitter / X',
         url: 'https://x.com/seu-usuario',
       },
       {
         id: 'lnk-youtube',
         platform: Platform.YOUTUBE,
-        label: 'YouTube',
+        // label: 'YouTube',
         url: 'https://youtube.com/@seu-usuario',
       },
     ],
@@ -68,19 +68,19 @@ export const mockLinkGroups: LinkGroup[] = [
       {
         id: 'lnk-stackoverflow',
         platform: Platform.STACKOVERFLOW,
-        label: 'Stack Overflow',
+        // label: 'Stack Overflow',
         url: 'https://stackoverflow.com/users/123456/seu-usuario',
       },
       {
         id: 'lnk-devto',
         platform: Platform.DEVTO,
-        label: 'Dev.to',
+        // label: 'Dev.to',
         url: 'https://dev.to/seu-usuario',
       },
       {
         id: 'lnk-blog',
         platform: Platform.DEVTO, // ou outra que faça sentido
-        label: 'Tech Blog',
+        // label: 'Tech Blog',
         url: 'https://blog.seu-site.dev',
       },
     ],
@@ -96,19 +96,19 @@ export const mockLinkGroups: LinkGroup[] = [
       {
         id: 'lnk-email',
         platform: Platform.GITHUB, // placeholder; pode criar um Platform.EMAIL se quiser
-        label: 'Email',
+        // label: 'Email',
         url: 'mailto:voce@exemplo.com',
       },
       {
         id: 'lnk-whatsapp',
         platform: Platform.FACEBOOK, // placeholder
-        label: 'WhatsApp',
+        // label: 'WhatsApp',
         url: 'https://wa.me/5511999999999',
       },
       {
         id: 'lnk-calendar',
         platform: Platform.GITHUB, // placeholder
-        label: 'Calendly',
+        // label: 'Calendly',
         url: 'https://calendly.com/seu-usuario',
       },
     ],
@@ -124,19 +124,19 @@ export const mockLinkGroups: LinkGroup[] = [
       {
         id: 'lnk-goodreads',
         platform: Platform.DEVTO, // placeholder
-        label: 'Goodreads',
+        // label: 'Goodreads',
         url: 'https://goodreads.com/seu-usuario',
       },
       {
         id: 'lnk-letterboxd',
         platform: Platform.YOUTUBE, // placeholder
-        label: 'Letterboxd',
+        // label: 'Letterboxd',
         url: 'https://letterboxd.com/seu-usuario',
       },
       {
         id: 'lnk-spotify',
         platform: Platform.YOUTUBE, // placeholder
-        label: 'Spotify',
+        // label: 'Spotify',
         url: 'https://open.spotify.com/user/seu-usuario',
       },
     ],
