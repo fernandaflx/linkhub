@@ -32,7 +32,9 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 
 import { ChevronsUpDown, Check, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { LINK_TYPES, LinkType } from "@/types/types";
+import { LinkType } from "@/types/types";
+import { LINK_TYPES } from "@/lib/platforms";
+// import { LINK_TYPES, LinkType } from "@/types/types";
 
 const linkSchema = z.object({
   type: z.string().min(1, "Selecione um tipo."),

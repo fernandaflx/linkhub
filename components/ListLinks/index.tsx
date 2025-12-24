@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils";
 import { LinkGroup } from "@/types/types";
 import { Link2, Plus } from "lucide-react";
 import { ActionsMenu } from "./Menu";
@@ -45,10 +44,7 @@ export default function LinkGroupsGrid({
         >
           <div className="mb-4 flex items-start justify-between">
             <div
-              className={cn(
-                "flex h-12 w-12 items-center justify-center rounded-lg",
-                group.colorClass
-              )}
+              className="flex h-12 w-12 items-center justify-center rounded-lg"
             >
               <span className="text-2xl font-semibold">{group.icon}</span>
             </div>
