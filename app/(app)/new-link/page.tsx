@@ -1,17 +1,21 @@
 'use client';
-
 import { LinkEditor } from '@/components/link-editor/LinkEditor';
 import type { Link } from '@/types/types';
+import type { LinkGroupFormState } from '@/components/link-editor/LinkEditor';
 
 type Props = {
   initialLinks?: Link[];
 };
 
 export default function NewLinkPage({ initialLinks = [] }: Props) {
-  const handleSave = (links: Link[]) => {
+  const handleSave = (data: LinkGroupFormState) => {
     // aqui POST/PUT para API
-    console.log('links salvos', links);
+    console.log('grupo salvo', data);
+    // data.linkTitle
+    // data.linkCategory
+    // data.links
   };
+
 
   return (
     <div className="max-w-3xl mx-auto flex flex-col gap-6 animate-in fade-in duration-500">

@@ -1,66 +1,115 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Plus } from 'lucide-react';
+import { Check, ChevronsUpDown, Plus } from 'lucide-react';
 import { Link, Platform } from '@/types/types';
 import { SortableTable } from './SortableTable';
+import { Input } from '../ui/input';
+import { cn } from '@/lib/utils';
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
+
+import {
+  Command,
+  CommandInput,
+  CommandEmpty,
+  CommandList,
+  CommandGroup,
+  CommandItem,
+} from "@/components/ui/command";
+
+import { Button } from '../ui/button';
+import { GroupCategories, GroupCategoriesValue } from './group-categories';
+
+
+
+export type LinkGroupFormState = {
+  linkTitle: string;
+  linkCategory: GroupCategoriesValue | "";
+  links: Link[];
+};
 
 type LinkEditorProps = {
   initialLinks?: Link[];
-  onSave: (links: Link[]) => void;
+  onSave: (data: LinkGroupFormState) => void;
 };
 
 export function LinkEditor({ initialLinks = [], onSave }: LinkEditorProps) {
-  const [localLinks, setLocalLinks] = useState<Link[]>(initialLinks);
+  const [formState, setFormState] = useState<LinkGroupFormState>({
+    linkTitle: "",
+    linkCategory: "",
+    links: initialLinks,
+  });
+
   const [isSaving, setIsSaving] = useState(false);
   const [autoOpenId, setAutoOpenId] = useState<string | null>(null);
+
+  const [openCategory, setOpenCategory] = useState(false);
+
+  const currentCategory = GroupCategories.find(
+    (type) => type.value === formState.linkCategory
+  );
 
   const handleAddLink = () => {
     const newLink: Link = {
       id: Math.random().toString(36).substr(2, 9),
       platform: Platform.GITHUB,
-      url: '',
+      url: "",
     };
-    setLocalLinks((prev) => [...prev, newLink]);
+
+    setFormState((prev) => ({
+      ...prev,
+      links: [...prev.links, newLink],
+    }));
     setAutoOpenId(newLink.id);
   };
 
   const handleRemoveLink = (id: string) => {
-    setLocalLinks((prev) => prev.filter((l) => l.id !== id));
+    setFormState((prev) => ({
+      ...prev,
+      links: prev.links.filter((l) => l.id !== id),
+    }));
     if (autoOpenId === id) setAutoOpenId(null);
   };
 
   const handleUpdateLink = (id: string, values: { type: string; url: string }) => {
     setAutoOpenId(null);
-    setLocalLinks((prev) =>
-      prev.map((l) =>
+    setFormState((prev) => ({
+      ...prev,
+      links: prev.links.map((l) =>
         l.id === id
           ? { ...l, platform: values.type as Platform, url: values.url }
-          : l,
+          : l
       ),
-    );
+    }));
   };
 
   const handleChangeOrder = (ordered: Link[]) => {
-    setLocalLinks(ordered);
+    setFormState((prev) => ({
+      ...prev,
+      links: ordered,
+    }));
   };
 
   const hasValidLink = useMemo(
     () =>
-      localLinks.length > 0 &&
-      localLinks.every(
-        (link) => link.platform && link.url.trim().length > 0,
+      formState.links.length > 0 &&
+      formState.links.every(
+        (link) => link.platform && link.url.trim().length > 0
       ),
-    [localLinks],
+    [formState.links]
   );
 
   const handleSave = () => {
     if (!hasValidLink) return;
     setIsSaving(true);
     setTimeout(() => {
-      onSave(localLinks);
+      onSave(formState);
       setIsSaving(false);
-      alert('Changes saved successfully!');
+      alert("Changes saved successfully!");
     }, 1000);
   };
 
@@ -77,8 +126,82 @@ export function LinkEditor({ initialLinks = [], onSave }: LinkEditorProps) {
           <span className="text-primary font-bold">Adicionar link</span>
         </button>
 
+        {formState.links.length > 0 && (
+          <div className='mb-6 space-y-6'>
+            <Input
+              className="h-12 rounded-[8px]"
+              placeholder="Título do grupo"
+              value={formState.linkTitle}
+              onChange={(e) =>
+                setFormState((prev) => ({ ...prev, linkTitle: e.target.value }))
+              }
+            />
+
+            <Popover open={openCategory} onOpenChange={setOpenCategory}>
+              <PopoverTrigger asChild>
+                <Button
+                  type="button"
+                  variant="outline"
+                  role="combobox"
+                  className={cn(
+                    "h-12 w-full justify-between rounded-[8px]",
+                    !formState.linkCategory && "text-muted-foreground"
+                  )}
+                >
+                  {currentCategory ? (
+                    <span className="flex items-center gap-2">
+                      <currentCategory.icon className="h-4 w-4" />
+                      {currentCategory.label}
+                    </span>
+                  ) : (
+                    "Selecionar categoria"
+                  )}
+                  <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+
+              <PopoverContent className="p-0 w-(--radix-popover-trigger-width) max-w-full rounded-[8px]">
+                <Command>
+                  <CommandInput placeholder="Buscar categoria..." />
+                  <CommandEmpty>Nenhuma categoria encontrada.</CommandEmpty>
+                  <CommandList>
+                    <CommandGroup>
+                      {GroupCategories.map((type) => (
+                        <CommandItem
+                          key={type.value}
+                          value={type.value}
+                          onSelect={(value) => {
+                            setFormState((prev) => ({
+                              ...prev,
+                              linkCategory: value as GroupCategoriesValue,
+                            }));
+                            setOpenCategory(false);
+                          }}
+
+                        >
+                          <type.icon className="mr-2 h-4 w-4" />
+                          <span>{type.label}</span>
+                          <Check
+                            className={cn(
+                              "ml-auto h-4 w-4",
+                              formState.linkCategory === type.value
+                                ? "opacity-100"
+                                : "opacity-0"
+                            )}
+                          />
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
+
+          </div>
+        )}
+
         <SortableTable
-          links={localLinks}
+          links={formState.links}
           onChangeOrder={handleChangeOrder}
           onUpdateLink={handleUpdateLink}
           onRemoveLink={handleRemoveLink}
