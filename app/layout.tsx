@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Lora, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "./auth-provider";
+import { ReactQueryProvider } from "@/components/query-client-provider";
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -52,7 +53,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
-            {children}
+            <ReactQueryProvider>
+              {children}
+            </ReactQueryProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>

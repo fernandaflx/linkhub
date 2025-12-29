@@ -1,9 +1,13 @@
 'use client'
+import { useAuth } from '@/app/auth-provider';
 import LinkGroupsGrid from '@/components/ListLinks'
 import { mockLinkGroups } from '@/components/ListLinks/mock'
 
 
 export default function Dashboard() {
+  const { user } = useAuth();
+  console.log(user)
+
   return (
     <>
       <div className='my-8'>

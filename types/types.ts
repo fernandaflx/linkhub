@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 export interface UserProfile {
-  firstName: string
-  lastName: string
+  id: string
+  name: string
   email: string
   bio: string
-  profilePicture: string
+  photoUrl: string
+  provider: string
 }
 
 export enum Platform {

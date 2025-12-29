@@ -11,7 +11,6 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
-
 import {
   Command,
   CommandInput,
@@ -20,11 +19,8 @@ import {
   CommandGroup,
   CommandItem,
 } from "@/components/ui/command";
-
 import { Button } from '../ui/button';
 import { GroupCategories, GroupCategoriesValue } from './group-categories';
-
-
 
 export type LinkGroupFormState = {
   linkTitle: string;
@@ -33,15 +29,15 @@ export type LinkGroupFormState = {
 };
 
 type LinkEditorProps = {
-  initialLinks?: Link[];
+  links?: Link[];
   onSave: (data: LinkGroupFormState) => void;
 };
 
-export function LinkEditor({ initialLinks = [], onSave }: LinkEditorProps) {
+export function LinkEditor({ links = [], onSave }: LinkEditorProps) {
   const [formState, setFormState] = useState<LinkGroupFormState>({
     linkTitle: "",
     linkCategory: "",
-    links: initialLinks,
+    links: links,
   });
 
   const [isSaving, setIsSaving] = useState(false);

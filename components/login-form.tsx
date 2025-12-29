@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -22,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase";
 import { PasswordInput } from "./password-input";
+import { ComponentProps, useState, FormEvent } from "react";
 
 async function createSessionCookie(idToken: string) {
   await fetch("/api/session", {
@@ -34,14 +34,14 @@ async function createSessionCookie(idToken: string) {
 export function LoginForm({
   className,
   ...props
-}: React.ComponentProps<"div">) {
+}: ComponentProps<"div">) {
   const router = useRouter();
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState<string | null>(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  async function handleEmailLogin(e: React.FormEvent) {
+  async function handleEmailLogin(e: FormEvent) {
     e.preventDefault();
     setError(null);
     setLoading(true);

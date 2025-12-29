@@ -2,19 +2,25 @@
 import { LinkEditor } from '@/components/link-editor/LinkEditor';
 import type { Link } from '@/types/types';
 import type { LinkGroupFormState } from '@/components/link-editor/LinkEditor';
+import { createLinkGroup } from '@/lib/link-groups';
+import { auth } from "@/lib/firebase";
 
 type Props = {
-  initialLinks?: Link[];
+  links?: Link[];
 };
 
-export default function NewLinkPage({ initialLinks = [] }: Props) {
-  const handleSave = (data: LinkGroupFormState) => {
-    // aqui POST/PUT para API
-    console.log('grupo salvo', data);
-    // data.linkTitle
-    // data.linkCategory
-    // data.links
+export default function NewLinkPage({ links = [] }: Props) {
+
+  const handleSave = async (data: LinkGroupFormState) => {
+    const user = auth.currentUser;
+    if (!user) {
+      return;
+    }
+
+    const userId = user.uid;
+    await createLinkGroup(userId, data);
   };
+
 
 
   return (
@@ -23,7 +29,9 @@ export default function NewLinkPage({ initialLinks = [] }: Props) {
         <h1 className="text-3xl font-bold mb-2">Criar novo grupo de links</h1>
         <p>Organize seus links em coleções e compartilhe tudo com o mundo.</p>
       </div>
-      <LinkEditor initialLinks={initialLinks} onSave={handleSave} />
+      <LinkEditor
+        links={links}
+        onSave={handleSave} />
     </div>
   );
 }
