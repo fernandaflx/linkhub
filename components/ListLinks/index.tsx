@@ -3,7 +3,7 @@ import { Link2, Plus } from "lucide-react";
 import { ActionsMenu } from "./Menu";
 
 type Props = {
-  groups: LinkGroup[];
+  groups?: LinkGroup[];
   onEdit?: (group: LinkGroup) => void;
   onCopy?: (group: LinkGroup) => void;
   onDelete?: (group: LinkGroup) => void;
@@ -16,28 +16,21 @@ export default function LinkGroupsGrid({
   onDelete,
 }: Props) {
 
-  if (groups.length === 0) {
-    return (
-      <div className="flex items-center justify-center min-h-[260px]">
-        <a href="/new-link">
-          <button
-            // onClick={onCreateGroup}
-            className="border-2 border-dashed rounded-xl p-6 flex flex-col items-center justify-center text-center hover:border-primary hover:bg-primary/5 transition-all h-full min-h-[260px] group"
-          >
-            <div className="h-14 w-14 rounded-full border flex items-center justify-center text-primary mb-4 shadow-sm group-hover:scale-110 transition-transform">
-              <Plus />
-            </div>
-            <h3 className="text-lg font-bold mb-2">Create New Group</h3>
-            <p className="text-sm max-w-[200px]">Start a new collection for a different audience or project.</p>
-          </button>
-        </a>
-      </div>
-    )
-  }
-
   return (
     <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-      {groups.map((group) => (
+      <a href="/new-link">
+        <button
+          className="border-2 border-dashed rounded-xl p-6 flex flex-col items-center justify-center text-center hover:border-primary hover:bg-primary/5 transition-all h-full w-full group"
+        >
+          <div className="h-14 w-14 rounded-full border flex items-center justify-center text-primary mb-4 shadow-sm group-hover:scale-110 transition-transform">
+            <Plus />
+          </div>
+          <h3 className="text-lg font-bold mb-2">Create New Group</h3>
+          <p className="text-sm max-w-[200px]">Start a new collection for a different audience or project.</p>
+        </button>
+      </a>
+
+      {groups?.map((group) => (
         <div
           key={group.id}
           className="group flex h-full flex-col rounded-xl border border-transparent bg-card p-6 shadow-sm transition-all duration-300 hover:border-primary/40 hover:shadow-md"

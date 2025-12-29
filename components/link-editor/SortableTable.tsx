@@ -188,28 +188,30 @@ export function SortableTable({
   const handleRemoveRow = (id: string) => onRemoveLink(id);
 
   return (
-    <DndContext
-      collisionDetection={closestCenter}
-      modifiers={[restrictToVerticalAxis]}
-      sensors={sensors}
-      onDragEnd={handleDragEnd}
-    >
-      <Table className="w-full bg-muted/40 rounded-sm">
-        <TableBody>
-          <SortableContext items={items} strategy={verticalListSortingStrategy}>
-            {table.getRowModel().rows.map((row) => (
-              <DraggableRow
-                key={row.id}
-                row={row}
-                onUpdateRow={handleUpdateRow}
-                onRemoveRow={handleRemoveRow}
-                isOpen={openId === row.original.id}
-                setOpenId={setOpenId}
-              />
-            ))}
-          </SortableContext>
-        </TableBody>
-      </Table>
-    </DndContext>
+    <div>
+      <DndContext
+        collisionDetection={closestCenter}
+        modifiers={[restrictToVerticalAxis]}
+        sensors={sensors}
+        onDragEnd={handleDragEnd}
+      >
+        <Table className="w-full bg-muted/40 rounded-sm">
+          <TableBody>
+            <SortableContext items={items} strategy={verticalListSortingStrategy}>
+              {table.getRowModel().rows.map((row) => (
+                <DraggableRow
+                  key={row.id}
+                  row={row}
+                  onUpdateRow={handleUpdateRow}
+                  onRemoveRow={handleRemoveRow}
+                  isOpen={openId === row.original.id}
+                  setOpenId={setOpenId}
+                />
+              ))}
+            </SortableContext>
+          </TableBody>
+        </Table>
+      </DndContext>
+    </div >
   );
 }
