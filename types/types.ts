@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 export interface UserProfile {
   id: string
-  name: string
-  email: string
-  bio: string
-  photoUrl: string
+  name: string | null
+  email: string | null
+  bio?: string | null
+  photoUrl?: string | null
   provider: string
 }
 

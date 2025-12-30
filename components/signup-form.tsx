@@ -15,32 +15,68 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { PasswordInput } from "./password-input"
+import { ComponentProps, useState } from "react"
+import { signUpWithEmail, } from "@/lib/auth-client"
+import { useRouter } from "next/navigation"
+
+
+type SignupFormValues = {
+  name: string
+  email: string
+  password: string
+}
 
 export function SignupForm({
   className,
   ...props
-}: React.ComponentProps<"div">) {
+}: ComponentProps<"div">) {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+
+  async function handleEmailSignup(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setError(null)
+    setLoading(true)
+
+    const formData = new FormData(e.currentTarget)
+
+    const values = Object.fromEntries(formData.entries()) as SignupFormValues
+    const { name, email, password } = values
+
+    try {
+      await signUpWithEmail(name, email, password)
+      router.push('/dashboard')
+    } catch (err: unknown) {
+      setError('Não foi possível criar conta.')
+      console.log(err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Create your account</CardTitle>
+          <CardTitle className="text-xl">Crie sua conta</CardTitle>
           <CardDescription>
-            Enter your email below to create your account
+            Insira os dados abaixo e faça parte da comunidade do Linkhub.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleEmailSignup}>
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="name">Full Name</FieldLabel>
-                <Input id="name" type="text" placeholder="John Doe" required />
+                <FieldLabel htmlFor="name">Nome completo</FieldLabel>
+                <Input id="name" name='name' type="text" placeholder="John Doe" required />
               </Field>
               <Field>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <FieldLabel htmlFor="email">E-mail</FieldLabel>
                 <Input
                   id="email"
+                  name='email'
                   type="email"
                   placeholder="m@example.com"
                   required
@@ -49,30 +85,39 @@ export function SignupForm({
               <Field>
                 <Field className="grid grid-cols-2 gap-4">
                   <Field>
-                    <FieldLabel htmlFor="password">Password</FieldLabel>
+                    <FieldLabel htmlFor="password">Senha</FieldLabel>
                     <PasswordInput
                       id="password"
+                      name='password'
                       required
                     />
                   </Field>
                   <Field>
                     <FieldLabel htmlFor="confirm-password">
-                      Confirm Password
+                      Confirme sua senha
                     </FieldLabel>
                     <PasswordInput
                       id="confirm-password"
+                      name="confirm-password"
                       required
                     />
                   </Field>
                 </Field>
                 <FieldDescription>
-                  Must be at least 8 characters long.
+                  A senha precisa ter ao menos 8 caracteres
                 </FieldDescription>
               </Field>
               <Field>
-                <Button type="submit">Create Account</Button>
+                <Button type="submit" disabled={loading}>
+                  {loading ? 'Criando conta' : 'Criar conta'}
+                </Button>
+                {error && (
+                  <FieldDescription className="text-center text-destructive">
+                    {error}
+                  </FieldDescription>
+                )}
                 <FieldDescription className="text-center">
-                  Already have an account? <a href="#">Sign in</a>
+                  Já possui uma conta? <a href="/login">Entre agora.</a>
                 </FieldDescription>
               </Field>
             </FieldGroup>

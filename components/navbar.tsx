@@ -1,37 +1,49 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Logo } from "./logo";
-import ThemeSwitcher from "./theme-switcher";
-import { useAuth } from "@/app/auth-provider";
+import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
+import { Logo } from './logo'
+import ThemeSwitcher from './theme-switcher'
+import { useAuth } from '@/app/auth-provider'
+import { signOut } from 'firebase/auth'
+import { auth } from '@/lib/firebase'
 
 export function NavBar() {
-  const { user } = useAuth();
-  const pathname = usePathname();
+  const { user, loading } = useAuth()
+  const pathname = usePathname()
+  const router = useRouter()
 
-  const isAuthenticated = !!user;
+  const isAuthenticated = !!user
 
-  const publicLinks = [{ href: "/login", label: "Entrar" }];
-
+  const publicLinks = [{ href: '/login', label: 'Entrar' }]
   const appLinks = [
-    { href: "/dashboard", label: "Dashboard" },
-    { href: "/settings", label: "Configurações" },
-  ];
+    { href: '/dashboard', label: 'Dashboard' },
+    { href: '/settings', label: 'Configurações' },
+  ]
 
-  const links = isAuthenticated ? appLinks : publicLinks;
+  const links = isAuthenticated ? appLinks : publicLinks
 
-  const hideLinks = pathname === "/login" || pathname === "/signup";
+  const hideLinks =
+    pathname === '/login' || pathname === '/signup' || pathname === '/'
+
+  const handleLogout = async () => {
+    await signOut(auth)
+    await fetch('/api/session', { method: 'DELETE' })
+    router.push('/')
+  }
 
   return (
     <nav className="fixed top-0 inset-x-0 z-50 flex justify-center px-4 py-3 w-screen">
       <div className="glass-panel flex w-full items-center justify-between rounded-full px-4 py-2">
-        <Link href={isAuthenticated ? '/dashboard' : "/"} className="flex items-center gap-2">
+        <Link
+          href={isAuthenticated ? '/dashboard' : '/'}
+          className="flex items-center gap-2"
+        >
           <Logo />
         </Link>
 
         <div className="hidden sm:flex items-center gap-4 text-sm">
-          {!hideLinks && (
+          {loading ? null : !hideLinks && (
             <>
               {links.map((item) => (
                 <Link
@@ -44,7 +56,10 @@ export function NavBar() {
               ))}
 
               {isAuthenticated ? (
-                <button className="rounded-full bg-destructive px-4 py-1 text-xs font-medium text-destructive-foreground">
+                <button
+                  onClick={handleLogout}
+                  className="rounded-full bg-destructive px-4 py-1 text-xs font-medium text-destructive-foreground"
+                >
                   Sair
                 </button>
               ) : (
@@ -62,5 +77,5 @@ export function NavBar() {
         </div>
       </div>
     </nav>
-  );
+  )
 }

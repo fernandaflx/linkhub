@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from 'firebase/auth'
 import { auth, googleProvider } from '@/lib/firebase'
 
@@ -16,8 +17,13 @@ async function createSessionCookie(idToken: string) {
   })
 }
 
-export async function signUpWithEmail(email: string, password: string) {
+export async function signUpWithEmail(
+  name: string,
+  email: string,
+  password: string
+) {
   const { user } = await createUserWithEmailAndPassword(auth, email, password)
+  await updateProfile(user, { displayName: name })
   const idToken = await user.getIdToken()
   await createSessionCookie(idToken)
   return user
